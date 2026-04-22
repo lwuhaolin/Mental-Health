@@ -1,0 +1,181 @@
+/* pages/consultation/list/list.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding-bottom: 40rpx;
+}
+
+/* 状态筛选 */
+.status-tabs {
+  display: flex;
+  background-color: white;
+  padding: 24rpx 30rpx;
+  gap: 20rpx;
+  overflow-x: auto;
+}
+
+.tab-item {
+  padding: 16rpx 32rpx;
+  background-color: #f5f5f5;
+  border-radius: 40rpx;
+  font-size: 28rpx;
+  color: #666;
+  white-space: nowrap;
+  transition: all 0.3s;
+}
+
+.tab-item.active {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+/* 咨询列表 */
+.consultation-list {
+  padding: 30rpx;
+}
+
+.consultation-card {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 24rpx;
+  padding-bottom: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.expert-info {
+  display: flex;
+  align-items: center;
+  flex: 1;
+}
+
+.expert-avatar {
+  width: 80rpx;
+  height: 80rpx;
+  border-radius: 50%;
+  margin-right: 16rpx;
+  background-color: #f5f5f5;
+}
+
+.expert-details {
+  flex: 1;
+}
+
+.expert-name {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 4rpx;
+}
+
+.expert-title {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.status-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.status-accepted {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.status-completed {
+  background-color: #d1fae5;
+  color: #10b981;
+}
+
+.status-cancelled {
+  background-color: #fee2e2;
+  color: #ef4444;
+}
+
+/* 卡片内容 */
+.card-body {
+  margin-bottom: 20rpx;
+}
+
+.info-row {
+  display: flex;
+  padding: 12rpx 0;
+  font-size: 28rpx;
+}
+
+.label {
+  color: #999;
+  min-width: 160rpx;
+}
+
+.value {
+  color: #333;
+  flex: 1;
+}
+
+/* 卡片底部 */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 20rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.price {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #ef4444;
+}
+
+.action-btn {
+  color: #6366f1;
+  font-size: 28rpx;
+}
+
+/* 空状态 */
+.empty-state {
+  text-align: center;
+  padding: 120rpx 40rpx;
+}
+
+.empty-icon {
+  font-size: 120rpx;
+  margin-bottom: 20rpx;
+}
+
+.empty-text {
+  font-size: 28rpx;
+  color: #999;
+  margin-bottom: 40rpx;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12rpx;
+  padding: 24rpx 60rpx;
+  font-size: 30rpx;
+  display: inline-block;
+}
+
+.btn-primary::after {
+  border: none;
+}
+

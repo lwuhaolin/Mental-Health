@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="900" height="240" viewBox="0 0 900 240">
+  <defs>
+    <linearGradient id="waveGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#1a2a6c"/>
+      <stop offset="50%" stop-color="#2b5876"/>
+      <stop offset="100%" stop-color="#4e4376"/>
+    </linearGradient>
+  </defs>
+  <rect width="900" height="240" fill="none"/>
+  <path d="M0 120 C 90 80 180 160 270 120 C 360 80 450 160 540 120 C 630 80 720 160 810 120 L 900 90 L 900 240 L 0 240 Z" fill="url(#waveGrad)" fill-opacity="0.18"/>
+  <path d="M0 150 C 90 110 180 190 270 150 C 360 110 450 190 540 150 C 630 110 720 190 810 150 L 900 120 L 900 240 L 0 240 Z" fill="#3fb5ff" fill-opacity="0.14"/>
+  <path d="M0 180 C 90 140 180 220 270 180 C 360 140 450 220 540 180 C 630 140 720 220 810 180 L 900 150 L 900 240 L 0 240 Z" fill="#67c23a" fill-opacity="0.10"/>
+</svg>

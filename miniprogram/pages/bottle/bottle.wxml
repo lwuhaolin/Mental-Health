@@ -1,0 +1,204 @@
+<!--pages/bottle/bottle.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-title">心情漂流瓶</view>
+    <view class="header-desc">让心声飘向远方，温暖相遇</view>
+  </view>
+
+  <!-- 发布按钮 -->
+  <view class="publish-section">
+    <button class="publish-btn" bindtap="showPublishDialog">
+      ✍️ 写下你的心情
+    </button>
+  </view>
+
+  <!-- 漂流瓶列表 -->
+  <view class="bottles-list" wx:if="{{bottles.length > 0}}">
+    <view class="bottle-card" wx:for="{{bottles}}" wx:key="id">
+      <view class="bottle-header">
+        <view class="author-info">
+          <text class="author-icon">{{item.isAnonymous ? '🎭' : '👤'}}</text>
+          <text class="author-name">{{item.isAnonymous ? '匿名用户' : item.username}}</text>
+          <text class="my-tag" wx:if="{{item.userId === userInfo.id}}">我的</text>
+        </view>
+        <view class="bottle-mood" wx:if="{{item.mood}}">{{getMoodEmoji(item.mood)}}</view>
+      </view>
+
+      <view class="bottle-content" bindtap="viewBottleDetail" data-id="{{item.id}}" data-index="{{index}}">
+        {{item.content}}
+      </view>
+
+      <view class="bottle-footer">
+        <view class="action-item" bindtap="likeBottle" data-id="{{item.id}}" data-index="{{index}}">
+          <text class="action-icon {{item.isLiked ? 'liked' : ''}}">❤️</text>
+          <text class="action-text">{{item.likeCount || 0}}</text>
+        </view>
+        <view class="action-item" bindtap="viewBottleDetail" data-id="{{item.id}}" data-index="{{index}}">
+          <text class="action-icon">💬</text>
+          <text class="action-text">{{item.replyCount || 0}}</text>
+        </view>
+        <view class="action-item" wx:if="{{item.userId === userInfo.id}}" bindtap="deleteBottle" data-id="{{item.id}}" data-index="{{index}}">
+          <text class="action-icon">🗑️</text>
+          <text class="action-text">删除</text>
+        </view>
+        <view class="action-item">
+          <text class="action-icon">📅</text>
+          <text class="action-text">{{item.time}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" bindtap="loadMore" wx:if="{{bottles.length > 0}}">
+    <text class="load-more-text">点击加载更多漂流瓶 🍾</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{bottles.length === 0 && !loading}}">
+    <view class="empty-icon">🍾</view>
+    <view class="empty-text">还没有漂流瓶</view>
+    <button class="btn-primary" bindtap="showPublishDialog">发布第一个</button>
+  </view>
+
+  <!-- 发布弹窗 -->
+  <view class="publish-dialog {{showDialog ? 'show' : ''}}" wx:if="{{showDialog}}">
+    <view class="dialog-mask" bindtap="hidePublishDialog"></view>
+    <view class="dialog-content">
+      <view class="dialog-header">
+        <view class="dialog-title">写下你的心情</view>
+        <view class="dialog-close" bindtap="hidePublishDialog">✕</view>
+      </view>
+
+      <view class="dialog-body">
+        <textarea 
+          class="content-input" 
+          placeholder="说说你的想法..." 
+          value="{{publishContent}}"
+          bindinput="onContentInput"
+          maxlength="500"
+          auto-height
+        />
+        <view class="char-count">{{publishContent.length}}/500</view>
+
+        <!-- 心情选择 -->
+        <view class="mood-section">
+          <view class="mood-label">选择心情：</view>
+          <view class="mood-options">
+            <view 
+              class="mood-item {{selectedMood === item.value ? 'active' : ''}}"
+              wx:for="{{moods}}" 
+              wx:key="value"
+              bindtap="selectMood"
+              data-mood="{{item.value}}"
+            >
+              <text class="mood-emoji">{{item.emoji}}</text>
+              <text class="mood-name">{{item.label}}</text>
+            </view>
+          </view>
+        </view>
+
+        <view class="anonymous-option">
+          <checkbox-group bindchange="onAnonymousChange">
+            <label>
+              <checkbox value="anonymous" checked="{{isAnonymous}}"/>
+              <text class="anonymous-text">🎭 匿名发布</text>
+            </label>
+          </checkbox-group>
+        </view>
+      </view>
+
+      <view class="dialog-footer">
+        <button class="btn-outline" bindtap="hidePublishDialog">取消</button>
+        <button class="btn-primary" bindtap="publishBottle" disabled="{{!publishContent}}">发布</button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 漂流瓶详情弹窗 -->
+  <view class="detail-dialog {{showDetailDialog ? 'show' : ''}}" wx:if="{{showDetailDialog}}">
+    <view class="dialog-mask" bindtap="hideDetailDialog"></view>
+    <view class="detail-content">
+      <view class="detail-header">
+        <view class="dialog-title">漂流瓶详情</view>
+        <view class="dialog-close" bindtap="hideDetailDialog">✕</view>
+      </view>
+
+      <scroll-view class="detail-body" scroll-y>
+        <!-- 漂流瓶内容 -->
+        <view class="detail-bottle" wx:if="{{currentBottle}}">
+          <view class="bottle-author">
+            <text class="author-icon">{{currentBottle.isAnonymous ? '🎭' : '👤'}}</text>
+            <text class="author-name">{{currentBottle.isAnonymous ? '匿名用户' : currentBottle.username}}</text>
+            <text class="mood-emoji" wx:if="{{currentBottle.mood}}">{{getMoodEmoji(currentBottle.mood)}}</text>
+          </view>
+          <view class="bottle-text">{{currentBottle.content}}</view>
+          <view class="bottle-meta">
+            <text>❤️ {{currentBottle.likeCount || 0}}</text>
+            <text>💬 {{currentBottle.replyCount || 0}}</text>
+          </view>
+        </view>
+
+        <!-- 回复列表 -->
+        <view class="reply-section">
+          <view class="reply-header">💬 回复列表 ({{replies.length}})</view>
+          
+          <view class="reply-list" wx:if="{{replies.length > 0}}">
+            <view class="reply-item" wx:for="{{replies}}" wx:key="id">
+              <view class="reply-user">
+                <text class="user-icon">{{item.isAnonymous ? '🎭' : '👤'}}</text>
+                <text class="user-name">{{item.isAnonymous ? '匿名用户' : item.username}}</text>
+                <text class="my-tag" wx:if="{{item.userId === userInfo.id}}">我的</text>
+              </view>
+              <view class="reply-content">{{item.content}}</view>
+              <view class="reply-footer">
+                <view class="reply-action" bindtap="likeReply" data-id="{{item.id}}" data-index="{{index}}">
+                  <text class="action-icon {{item.isLiked ? 'liked' : ''}}">❤️</text>
+                  <text>{{item.likeCount || 0}}</text>
+                </view>
+                <view class="reply-time">{{item.time}}</view>
+                <view class="reply-action" wx:if="{{item.userId === userInfo.id}}" bindtap="deleteReply" data-id="{{item.id}}" data-index="{{index}}">
+                  <text class="action-icon">🗑️</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <view class="no-replies" wx:else>
+            <text>暂无回复，快来抢沙发吧~</text>
+          </view>
+        </view>
+      </scroll-view>
+
+      <!-- 回复输入框 -->
+      <view class="reply-input-section">
+        <view class="reply-options">
+          <checkbox-group bindchange="onReplyAnonymousChange">
+            <label>
+              <checkbox value="anonymous" checked="{{replyAnonymous}}"/>
+              <text class="option-text">匿名回复</text>
+            </label>
+          </checkbox-group>
+        </view>
+        <view class="input-row">
+          <input 
+            class="reply-input" 
+            placeholder="写下你的回复..." 
+            value="{{replyContent}}"
+            bindinput="onReplyInput"
+            maxlength="200"
+          />
+          <button 
+            class="send-btn" 
+            bindtap="submitReply" 
+            disabled="{{!replyContent}}"
+          >
+            发送
+          </button>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

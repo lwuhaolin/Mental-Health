@@ -1,0 +1,65 @@
+<!--pages/consultation/list/list.wxml-->
+<view class="container">
+  <!-- 状态筛选 -->
+  <view class="status-tabs">
+    <view class="tab-item {{statusFilter === 'all' ? 'active' : ''}}" bindtap="filterByStatus" data-status="all">
+      全部
+    </view>
+    <view class="tab-item {{statusFilter === '待接单' ? 'active' : ''}}" bindtap="filterByStatus" data-status="待接单">
+      待接单
+    </view>
+    <view class="tab-item {{statusFilter === '进行中' ? 'active' : ''}}" bindtap="filterByStatus" data-status="进行中">
+      进行中
+    </view>
+    <view class="tab-item {{statusFilter === '已完成' ? 'active' : ''}}" bindtap="filterByStatus" data-status="已完成">
+      已完成
+    </view>
+  </view>
+
+  <!-- 咨询列表 -->
+  <view class="consultation-list" wx:if="{{consultations.length > 0}}">
+    <view class="consultation-card" wx:for="{{consultations}}" wx:key="id">
+      <view class="card-header">
+        <view class="expert-info">
+          <image class="expert-avatar" src="{{item.expertAvatar || '/images/default-avatar.png'}}" mode="aspectFill"/>
+          <view class="expert-details">
+            <view class="expert-name">{{item.expertName}}</view>
+            <view class="expert-title">{{item.expertTitle}}</view>
+          </view>
+        </view>
+        <view class="status-badge status-{{item.status}}">{{item.statusText}}</view>
+      </view>
+
+      <view class="card-body">
+        <view class="info-row" wx:if="{{item.title}}">
+          <text class="label">咨询主题：</text>
+          <text class="value">{{item.title}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">咨询类型：</text>
+          <text class="value">{{item.consultationType}}</text>
+        </view>
+        <view class="info-row">
+          <text class="label">预约时间：</text>
+          <text class="value">{{item.appointmentTime}}</text>
+        </view>
+        <view class="info-row" wx:if="{{item.duration}}">
+          <text class="label">咨询时长：</text>
+          <text class="value">{{item.duration}}分钟</text>
+        </view>
+      </view>
+
+      <view class="card-footer">
+        <view class="price">¥{{item.price}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <view class="empty-icon">📅</view>
+    <view class="empty-text">暂无咨询记录</view>
+    <button class="btn-primary" bindtap="goToExperts">去预约</button>
+  </view>
+</view>
+

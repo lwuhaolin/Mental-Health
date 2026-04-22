@@ -1,0 +1,19 @@
+<!-- components/avatar/avatar.wxml -->
+<view class="avatar-container" style="width: {{size}}rpx; height: {{size}}rpx;">
+  <!-- 真实头像 -->
+  <image 
+    wx:if="{{!showVirtual && userInfo.avatar}}"
+    class="avatar-img"
+    src="{{userInfo.avatar}}"
+    mode="aspectFill"
+  />
+  
+  <!-- 虚拟头像 -->
+  <view 
+    wx:else
+    class="avatar-virtual"
+    style="background: {{avatarData.color}}; font-size: {{size * 0.4}}rpx;">
+    {{avatarData.text}}
+  </view>
+</view>
+

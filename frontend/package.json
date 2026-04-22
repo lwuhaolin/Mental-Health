@@ -1,0 +1,25 @@
+{
+  "name": "xingyu-frontend",
+  "version": "1.0.0",
+  "description": "星语航海心理测评平台前端",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "vite preview --port 3000"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^2.1.0",
+    "axios": "^1.4.0",
+    "date-fns": "^2.30.0",
+    "echarts": "^5.4.3",
+    "element-plus": "^2.3.8",
+    "pinia": "^3.0.3",
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.2.3",
+    "vite": "^4.4.0"
+  }
+}

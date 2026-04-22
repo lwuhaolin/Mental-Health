@@ -1,0 +1,110 @@
+{
+  "mapping_size": 611,
+  "results": [
+    {
+      "file": "AdminDashboard.vue",
+      "replaced_map_items": 0,
+      "replaced_map_occurrences": 0,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 2664
+    },
+    {
+      "file": "AiInteraction.vue",
+      "replaced_map_items": 49,
+      "replaced_map_occurrences": 77,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 14
+    },
+    {
+      "file": "Assessment.vue",
+      "replaced_map_items": 26,
+      "replaced_map_occurrences": 43,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 2
+    },
+    {
+      "file": "AssessmentResult.vue",
+      "replaced_map_items": 26,
+      "replaced_map_occurrences": 34,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 4
+    },
+    {
+      "file": "AssessmentTaking.vue",
+      "replaced_map_items": 19,
+      "replaced_map_occurrences": 31,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 8
+    },
+    {
+      "file": "Contact.vue",
+      "replaced_map_items": 34,
+      "replaced_map_occurrences": 49,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 6
+    },
+    {
+      "file": "ExpertConsultation.vue",
+      "replaced_map_items": 44,
+      "replaced_map_occurrences": 59,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 3
+    },
+    {
+      "file": "Home.vue",
+      "replaced_map_items": 74,
+      "replaced_map_occurrences": 115,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 1
+    },
+    {
+      "file": "Layout.vue",
+      "replaced_map_items": 19,
+      "replaced_map_occurrences": 29,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 3
+    },
+    {
+      "file": "Login.vue",
+      "replaced_map_items": 37,
+      "replaced_map_occurrences": 87,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 1
+    },
+    {
+      "file": "MessageBottle.vue",
+      "replaced_map_items": 42,
+      "replaced_map_occurrences": 80,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 21
+    },
+    {
+      "file": "PsychologistDashboard.vue",
+      "replaced_map_items": 0,
+      "replaced_map_occurrences": 0,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 4682
+    },
+    {
+      "file": "UserProfile.vue",
+      "replaced_map_items": 39,
+      "replaced_map_occurrences": 51,
+      "fixed_broken_tags": 0,
+      "fffd_count": 0,
+      "question_count": 4
+    }
+  ],
+  "high_risk_files": []
+}

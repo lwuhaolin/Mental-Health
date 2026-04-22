@@ -1,0 +1,78 @@
+<!--pages/assessment/list/list.wxml-->
+<view class="container">
+  <!-- 页面标题 -->
+  <view class="page-header">
+    <view class="header-title">心理评估</view>
+    <view class="header-desc">了解自己，从心开始</view>
+  </view>
+
+  <!-- Tab切换 -->
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'all' ? 'active' : ''}}" bindtap="switchTab" data-tab="all">
+      全部评估
+    </view>
+    <view class="tab-item {{activeTab === 'history' ? 'active' : ''}}" bindtap="switchTab" data-tab="history">
+      我的记录
+    </view>
+  </view>
+
+  <!-- 全部评估列表 -->
+  <view wx:if="{{activeTab === 'all'}}">
+    <view class="assessment-list" wx:if="{{assessments.length > 0}}">
+      <view class="assessment-card" wx:for="{{assessments}}" wx:key="id" bindtap="startAssessment" data-id="{{item.id}}">
+        <view class="card-header">
+          <view class="assessment-icon">📋</view>
+          <view class="assessment-info">
+            <view class="assessment-name">{{item.name}}</view>
+            <view class="assessment-meta">
+              <text class="meta-item">{{item.questionCount || 20}}题</text>
+              <text class="meta-divider">|</text>
+              <text class="meta-item">约{{item.estimatedTime || 10}}分钟</text>
+            </view>
+          </view>
+        </view>
+        <view class="assessment-desc">{{item.description}}</view>
+        <view class="card-footer">
+          <view class="tags">
+            <text class="tag tag-primary">{{item.category || '心理测评'}}</text>
+          </view>
+          <view class="start-btn">开始测评 →</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <view class="empty-icon">📋</view>
+      <view class="empty-text">暂无评估项目</view>
+    </view>
+  </view>
+
+  <!-- 我的记录 -->
+  <view wx:if="{{activeTab === 'history'}}">
+    <view class="history-list" wx:if="{{historyList.length > 0}}">
+      <view class="history-card" wx:for="{{historyList}}" wx:key="id" bindtap="viewResult" data-item="{{item}}">
+        <view class="history-header">
+          <view class="history-name">{{item.assessmentTitle}}</view>
+          <view class="history-score">{{item.score}}分</view>
+        </view>
+        <view class="history-result">
+          <text class="result-label">评估结果：</text>
+          <text class="result-level result-{{item.level}}">{{item.level}}</text>
+        </view>
+        <view class="history-footer">
+          <view class="history-time">{{item.completedTime}}</view>
+          <view class="view-detail">查看详情 →</view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 空状态 -->
+    <view class="empty-state" wx:else>
+      <view class="empty-icon">📊</view>
+      <view class="empty-text">还没有评估记录</view>
+      <button class="btn-primary" bindtap="switchTab" data-tab="all">去测评</button>
+    </view>
+  </view>
+</view>
+

@@ -1,0 +1,87 @@
+<!--pages/ai/ai.wxml-->
+<view class="ai-container">
+  <!-- 聊天记录区域 -->
+  <scroll-view scroll-y class="chat-area" scroll-into-view="{{scrollToView}}" scroll-with-animation>
+    <!-- 欢迎消息 -->
+    <view class="welcome-message" wx:if="{{messages.length === 0}}">
+      <view class="welcome-icon">🤖</view>
+      <view class="welcome-title">AI心理疗愈师</view>
+      <view class="welcome-desc">我是您的AI心理助手，随时倾听您的心声</view>
+      <view class="quick-questions">
+        <view class="quick-title">您可以这样开始：</view>
+        <view class="quick-item" bindtap="sendQuickMessage" data-msg="我最近感到很焦虑">
+          "我最近感到很焦虑"
+        </view>
+        <view class="quick-item" bindtap="sendQuickMessage" data-msg="我想聊聊工作压力">
+          "我想聊聊工作压力"
+        </view>
+        <view class="quick-item" bindtap="sendQuickMessage" data-msg="如何改善睡眠质量">
+          "如何改善睡眠质量"
+        </view>
+      </view>
+    </view>
+
+    <!-- 消息列表 -->
+    <view class="message-list">
+      <view class="message-item {{item.role === 'user' ? 'user-message' : 'ai-message'}}" 
+            wx:for="{{messages}}" 
+            wx:key="index"
+            id="msg-{{index}}">
+        <view class="message-avatar">
+          <text wx:if="{{item.role === 'user'}}">👤</text>
+          <text wx:else>🤖</text>
+        </view>
+        <view class="message-content">
+          <view class="message-text">{{item.content}}</view>
+          <view class="message-time">{{item.time}}</view>
+        </view>
+      </view>
+
+      <!-- AI正在输入... -->
+      <view class="message-item ai-message" wx:if="{{isTyping}}">
+        <view class="message-avatar">🤖</view>
+        <view class="message-content">
+          <view class="typing-indicator">
+            <view class="dot"></view>
+            <view class="dot"></view>
+            <view class="dot"></view>
+          </view>
+        </view>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-area">
+    <view class="input-wrapper">
+      <textarea 
+        class="message-input" 
+        placeholder="说说你的想法..." 
+        value="{{inputMessage}}"
+        bindinput="onInput"
+        adjust-position="{{true}}"
+        auto-height
+        maxlength="500"
+      />
+      <view class="input-actions">
+        <view class="char-count">{{inputMessage.length}}/500</view>
+        <button class="send-btn" bindtap="sendMessage" disabled="{{!inputMessage || isTyping}}">
+          发送
+        </button>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能按钮 -->
+  <view class="function-bar">
+    <view class="function-btn" bindtap="clearHistory">
+      <text class="icon">🗑️</text>
+      <text class="text">清空记录</text>
+    </view>
+    <view class="function-btn" bindtap="showTips">
+      <text class="icon">💡</text>
+      <text class="text">使用提示</text>
+    </view>
+  </view>
+</view>
+

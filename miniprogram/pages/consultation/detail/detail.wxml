@@ -1,0 +1,128 @@
+<!--pages/consultation/detail/detail.wxml-->
+<view class="container">
+  <!-- 专家信息 -->
+  <view class="expert-section card">
+    <view class="expert-header">
+      <image class="expert-avatar" src="{{expert.avatar || '/images/default-avatar.png'}}" mode="aspectFill"/>
+      <view class="expert-info">
+        <view class="expert-name">{{expert.name}}</view>
+        <view class="expert-title">{{expert.title}}</view>
+        <view class="expert-rating">
+          <text class="star">⭐</text>
+          <text>{{expert.rating || 5.0}}</text>
+        </view>
+      </view>
+    </view>
+
+    <view class="expert-intro">{{expert.introduction}}</view>
+
+    <view class="expert-tags" wx:if="{{expert.specialties && expert.specialties.length > 0}}">
+      <text class="tag" wx:for="{{expert.specialties}}" wx:key="index">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 预约信息 / 咨询详情 -->
+  <view class="appointment-section card" wx:if="{{consultationId}}">
+    <view class="section-title">咨询详情</view>
+    <view class="info-list">
+      <view class="info-item">
+        <text class="label">订单编号</text>
+        <text class="value">{{consultation.orderNo}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">咨询类型</text>
+        <text class="value">{{consultation.consultationType}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">预约时间</text>
+        <text class="value">{{consultation.appointmentTime}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">咨询时长</text>
+        <text class="value">{{consultation.duration}}分钟</text>
+      </view>
+      <view class="info-item">
+        <text class="label">咨询费用</text>
+        <text class="value price">¥{{consultation.price}}</text>
+      </view>
+      <view class="info-item">
+        <text class="label">订单状态</text>
+        <view class="status-badge status-{{consultation.status}}">{{consultation.statusText}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 预约表单 -->
+  <view class="booking-form card" wx:else>
+    <view class="section-title">预约咨询</view>
+
+    <view class="form-item">
+      <view class="form-label">咨询类型</view>
+      <picker bindchange="onTypeChange" value="{{typeIndex}}" range="{{consultationTypes}}">
+        <view class="picker">
+          {{consultationTypes[typeIndex]}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">预约时间</view>
+      <picker mode="date" bindchange="onDateChange" value="{{bookingDate}}" start="{{today}}">
+        <view class="picker">
+          {{bookingDate || '选择日期'}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">预约时段</view>
+      <picker bindchange="onTimeChange" value="{{timeIndex}}" range="{{timeSlots}}">
+        <view class="picker">
+          {{timeSlots[timeIndex]}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">咨询时长</view>
+      <picker bindchange="onDurationChange" value="{{durationIndex}}" range="{{durations}}">
+        <view class="picker">
+          {{durations[durationIndex]}}
+        </view>
+      </picker>
+    </view>
+
+    <view class="form-item">
+      <view class="form-label">问题描述（选填）</view>
+      <textarea class="textarea" placeholder="简单描述您想咨询的问题..." value="{{description}}" bindinput="onDescriptionInput" maxlength="500"/>
+    </view>
+
+    <view class="price-info">
+      <view class="price-label">咨询费用</view>
+      <view class="price-value">¥{{totalPrice}}</view>
+    </view>
+
+    <button class="btn-primary btn-block" bindtap="submitBooking">确认预约</button>
+  </view>
+
+  <!-- 咨询消息（如果有咨询ID） -->
+  <view class="messages-section card" wx:if="{{consultationId && consultation.status === 'accepted'}}">
+    <view class="section-title">咨询消息</view>
+    
+    <scroll-view scroll-y class="messages-list" scroll-into-view="{{scrollToView}}">
+      <view class="message-item {{item.senderType === 'user' ? 'user-msg' : 'expert-msg'}}" 
+            wx:for="{{messages}}" 
+            wx:key="id"
+            id="msg-{{index}}">
+        <view class="message-content">{{item.content}}</view>
+        <view class="message-time">{{item.time}}</view>
+      </view>
+    </scroll-view>
+
+    <view class="message-input-area">
+      <input class="message-input" placeholder="输入消息..." value="{{messageInput}}" bindinput="onMessageInput"/>
+      <button class="send-btn" bindtap="sendMessage" disabled="{{!messageInput}}">发送</button>
+    </view>
+  </view>
+</view>
+

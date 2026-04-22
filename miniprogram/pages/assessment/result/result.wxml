@@ -1,0 +1,79 @@
+<!--pages/assessment/result/result.wxml-->
+<view class="container">
+  <!-- 结果概览 -->
+  <view class="result-overview">
+    <view class="score-circle">
+      <view class="score-value">{{result.score}}</view>
+      <view class="score-label">总分</view>
+    </view>
+    <view class="result-level {{result.levelClass}}">
+      {{result.resultLevel}}
+    </view>
+  </view>
+
+  <!-- 评估报告 -->
+  <view class="report-card card">
+    <view class="card-title">
+      <view class="title-icon">📊</view>
+      <view class="title-text">评估报告</view>
+    </view>
+    <view class="report-content">
+      <view class="report-item">
+        <view class="item-label">评估名称</view>
+        <view class="item-value">{{result.assessmentName}}</view>
+      </view>
+      <view class="report-item">
+        <view class="item-label">完成时间</view>
+        <view class="item-value">{{result.completedTime}}</view>
+      </view>
+      <view class="report-item">
+        <view class="item-label">总分</view>
+        <view class="item-value">{{result.score}}分</view>
+      </view>
+      <view class="report-item">
+        <view class="item-label">评估结果</view>
+        <view class="item-value">{{result.resultLevel}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 结果解读 -->
+  <view class="interpretation-card card">
+    <view class="card-title">
+      <view class="title-icon">💡</view>
+      <view class="title-text">结果解读</view>
+    </view>
+    <view class="interpretation-content">
+      {{result.interpretation || '根据您的评估结果，建议您保持良好的生活习惯，注意调节情绪。如有需要，可以寻求专业心理咨询师的帮助。'}}
+    </view>
+  </view>
+
+  <!-- 建议 -->
+  <view class="suggestions-card card">
+    <view class="card-title">
+      <view class="title-icon">🌟</view>
+      <view class="title-text">专业建议</view>
+    </view>
+    <view class="suggestions-list">
+      <view class="suggestion-item" wx:for="{{result.suggestions}}" wx:key="index">
+        <view class="suggestion-dot">•</view>
+        <view class="suggestion-text">{{item}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-section">
+    <button class="btn-outline" bindtap="goBack">返回列表</button>
+    <button class="btn-primary" bindtap="consultExpert">咨询专家</button>
+  </view>
+
+  <!-- 温馨提示 -->
+  <view class="tip-card">
+    <view class="tip-icon">⚠️</view>
+    <view class="tip-text">
+      本评估结果仅供参考，不能作为诊断依据。如有严重心理问题，请及时寻求专业医疗帮助。
+    </view>
+  </view>
+</view>
+

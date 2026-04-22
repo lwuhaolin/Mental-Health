@@ -1,0 +1,66 @@
+<!--pages/assessment/taking/taking.wxml-->
+<view class="container">
+  <!-- 进度条 -->
+  <view class="progress-section">
+    <view class="progress-bar">
+      <view class="progress-fill" style="width: {{progress}}%"></view>
+    </view>
+    <view class="progress-text">{{currentIndex + 1}} / {{questions.length}}</view>
+  </view>
+
+  <!-- 题目卡片 -->
+  <view class="question-card" wx:if="{{questions.length > 0}}">
+    <view class="question-number">第 {{currentIndex + 1}} 题</view>
+    <view class="question-text">{{currentQuestion.questionText}}</view>
+
+    <!-- 选项列表 -->
+    <view class="options-list">
+      <view class="option-item {{answers[currentIndex] === option.value ? 'selected' : ''}}" 
+            wx:for="{{currentQuestion.options}}" 
+            wx:key="value"
+            wx:for-item="option"
+            bindtap="selectOption" 
+            data-value="{{option.value}}">
+        <view class="option-radio">
+          <view class="radio-dot" wx:if="{{answers[currentIndex] === option.value}}"></view>
+        </view>
+        <view class="option-content">
+          <view class="option-label">{{option.label}}</view>
+          <view class="option-text">{{option.text}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 操作按钮 -->
+  <view class="action-buttons">
+    <button class="btn-outline" bindtap="prevQuestion" disabled="{{currentIndex === 0}}">
+      上一题
+    </button>
+    <button class="btn-primary" bindtap="nextQuestion" wx:if="{{currentIndex < questions.length - 1}}" disabled="{{!answers[currentIndex]}}">
+      下一题
+    </button>
+    <button class="btn-primary" bindtap="submitAssessment" wx:else disabled="{{!isAllAnswered}}">
+      提交
+    </button>
+  </view>
+
+  <!-- 答题卡 -->
+  <view class="answer-sheet">
+    <view class="sheet-title" bindtap="toggleSheet">
+      答题卡 {{showSheet ? '▲' : '▼'}}
+    </view>
+    <view class="sheet-content" wx:if="{{showSheet}}">
+      <view class="sheet-grid">
+        <view class="sheet-item {{answers[index] ? 'answered' : ''}} {{index === currentIndex ? 'current' : ''}}"
+              wx:for="{{questions}}" 
+              wx:key="index"
+              bindtap="jumpToQuestion" 
+              data-index="{{index}}">
+          {{index + 1}}
+        </view>
+      </view>
+    </view>
+  </view>
+</view>
+

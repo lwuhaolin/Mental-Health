@@ -1,0 +1,55 @@
+<!--pages/consultation/experts/experts.wxml-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <view class="search-input">
+      <text class="search-icon">🔍</text>
+      <input placeholder="搜索专家" bindinput="onSearch" value="{{keyword}}"/>
+    </view>
+  </view>
+
+  <!-- 专家列表 -->
+  <view class="experts-list" wx:if="{{experts.length > 0}}">
+    <view class="expert-card" wx:for="{{experts}}" wx:key="id" bindtap="viewExpert" data-id="{{item.id}}">
+      <view class="expert-header">
+        <image class="expert-avatar" src="{{item.avatar || '/images/default-avatar.png'}}" mode="aspectFill"/>
+        <view class="expert-info">
+          <view class="expert-name">
+            {{item.name}}
+            <text class="verified-badge" wx:if="{{item.verified}}">✓</text>
+          </view>
+          <view class="expert-title">{{item.title || '心理咨询师'}}</view>
+          <view class="expert-rating">
+            <text class="star">⭐</text>
+            <text class="rating-value">{{item.rating || 5.0}}</text>
+            <text class="rating-count">({{item.consultationCount || 0}}次咨询)</text>
+          </view>
+        </view>
+      </view>
+
+      <view class="expert-tags">
+        <text class="tag" wx:for="{{item.specialties}}" wx:key="index" wx:for-item="specialty">
+          {{specialty}}
+        </text>
+      </view>
+
+      <view class="expert-intro">{{item.introduction || '专业心理咨询师，擅长情绪管理、压力调节等'}}</view>
+
+      <view class="expert-footer">
+        <view class="price">
+          <text class="price-label">咨询费用：</text>
+          <text class="price-value">¥{{item.price || 200}}</text>
+          <text class="price-unit">/小时</text>
+        </view>
+        <view class="book-btn">预约咨询</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:else>
+    <view class="empty-icon">👨‍⚕️</view>
+    <view class="empty-text">暂无专家信息</view>
+  </view>
+</view>
+

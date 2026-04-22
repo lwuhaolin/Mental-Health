@@ -1,0 +1,291 @@
+/* pages/consultation/detail/detail.wxss */
+.container {
+  min-height: 100vh;
+  background-color: #f5f5f5;
+  padding: 30rpx;
+  padding-bottom: 60rpx;
+}
+
+.card {
+  background-color: white;
+  border-radius: 16rpx;
+  padding: 32rpx;
+  margin-bottom: 24rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0, 0, 0, 0.05);
+}
+
+.section-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 24rpx;
+  padding-bottom: 16rpx;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+/* 专家信息 */
+.expert-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+
+.expert-avatar {
+  width: 100rpx;
+  height: 100rpx;
+  border-radius: 50%;
+  margin-right: 20rpx;
+  background-color: #f5f5f5;
+}
+
+.expert-info {
+  flex: 1;
+}
+
+.expert-name {
+  font-size: 34rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 8rpx;
+}
+
+.expert-title {
+  font-size: 26rpx;
+  color: #999;
+  margin-bottom: 8rpx;
+}
+
+.expert-rating {
+  font-size: 24rpx;
+  color: #f59e0b;
+}
+
+.star {
+  margin-right: 4rpx;
+}
+
+.expert-intro {
+  font-size: 28rpx;
+  color: #666;
+  line-height: 1.6;
+  margin-bottom: 20rpx;
+}
+
+.expert-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12rpx;
+}
+
+.tag {
+  padding: 8rpx 16rpx;
+  background-color: #ede9fe;
+  color: #6366f1;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+/* 信息列表 */
+.info-list {
+  margin-top: 8rpx;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #f5f5f5;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item .label {
+  font-size: 28rpx;
+  color: #999;
+}
+
+.info-item .value {
+  font-size: 28rpx;
+  color: #333;
+  font-weight: 500;
+}
+
+.info-item .price {
+  color: #ef4444;
+  font-size: 32rpx;
+  font-weight: bold;
+}
+
+.status-badge {
+  padding: 8rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #f59e0b;
+}
+
+.status-accepted {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.status-completed {
+  background-color: #d1fae5;
+  color: #10b981;
+}
+
+/* 预约表单 */
+.form-item {
+  margin-bottom: 32rpx;
+}
+
+.form-label {
+  font-size: 28rpx;
+  color: #374151;
+  margin-bottom: 16rpx;
+  font-weight: 500;
+}
+
+.picker {
+  width: 100%;
+  height: 88rpx;
+  background-color: #f9fafb;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 12rpx;
+  padding: 0 24rpx;
+  font-size: 30rpx;
+  line-height: 88rpx;
+  color: #333;
+}
+
+.textarea {
+  width: 100%;
+  min-height: 200rpx;
+  background-color: #f9fafb;
+  border: 2rpx solid #e5e7eb;
+  border-radius: 12rpx;
+  padding: 24rpx;
+  font-size: 30rpx;
+  box-sizing: border-box;
+}
+
+.price-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 32rpx 0;
+  margin: 32rpx 0;
+  border-top: 1rpx solid #f0f0f0;
+  border-bottom: 1rpx solid #f0f0f0;
+}
+
+.price-label {
+  font-size: 30rpx;
+  color: #666;
+}
+
+.price-value {
+  font-size: 48rpx;
+  font-weight: bold;
+  color: #ef4444;
+}
+
+.btn-block {
+  width: 100%;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 12rpx;
+  padding: 28rpx;
+  font-size: 32rpx;
+}
+
+.btn-primary::after {
+  border: none;
+}
+
+/* 咨询消息 */
+.messages-list {
+  max-height: 600rpx;
+  padding: 20rpx 0;
+}
+
+.message-item {
+  margin-bottom: 24rpx;
+}
+
+.user-msg {
+  text-align: right;
+}
+
+.message-content {
+  display: inline-block;
+  max-width: 70%;
+  padding: 20rpx 24rpx;
+  border-radius: 12rpx;
+  font-size: 28rpx;
+  line-height: 1.5;
+  word-wrap: break-word;
+}
+
+.user-msg .message-content {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+.expert-msg .message-content {
+  background-color: #f5f5f5;
+  color: #333;
+}
+
+.message-time {
+  font-size: 22rpx;
+  color: #999;
+  margin-top: 8rpx;
+}
+
+.message-input-area {
+  display: flex;
+  align-items: center;
+  gap: 16rpx;
+  margin-top: 24rpx;
+  padding-top: 24rpx;
+  border-top: 1rpx solid #f0f0f0;
+}
+
+.message-input {
+  flex: 1;
+  height: 72rpx;
+  background-color: #f5f5f5;
+  border-radius: 36rpx;
+  padding: 0 24rpx;
+  font-size: 28rpx;
+}
+
+.send-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border: none;
+  border-radius: 36rpx;
+  padding: 16rpx 32rpx;
+  font-size: 28rpx;
+}
+
+.send-btn::after {
+  border: none;
+}
+
+.send-btn[disabled] {
+  background: #e5e7eb;
+  color: #9ca3af;
+}
+

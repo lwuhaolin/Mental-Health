@@ -1,0 +1,54 @@
+{
+  "pages": [
+    "pages/login/login",
+    "pages/index/index",
+    "pages/ai/ai",
+    "pages/assessment/assessment",
+    "pages/assessment/list/list",
+    "pages/assessment/taking/taking",
+    "pages/assessment/result/result",
+    "pages/consultation/consultation",
+    "pages/consultation/list/list",
+    "pages/consultation/detail/detail",
+    "pages/consultation/experts/experts",
+    "pages/bottle/bottle",
+    "pages/profile/profile",
+    "pages/health/health",
+    "pages/encyclopedia/encyclopedia",
+    "pages/profile/edit"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#6366f1",
+    "navigationBarTitleText": "心理健康助手",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#f5f5f5"
+  },
+  "tabBar": {
+    "color": "#7A7E83",
+    "selectedColor": "#6366f1",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/ai/ai",
+        "text": "AI疗愈"
+      },
+      {
+        "pagePath": "pages/bottle/bottle",
+        "text": "漂流瓶"
+      },
+      {
+        "pagePath": "pages/profile/profile",
+        "text": "我的"
+      }
+    ]
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}
+

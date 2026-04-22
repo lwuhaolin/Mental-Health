@@ -1,0 +1,88 @@
+<!--pages/index/index.wxml-->
+<view class="container">
+  <!-- 欢迎区域 -->
+  <view class="welcome-section">
+    <view class="welcome-bg">
+      <view class="welcome-text">
+        <view class="greeting">你好，{{userInfo.username || '访客'}}</view>
+        <view class="sub-greeting">让我们一起关注心理健康</view>
+      </view>
+      <view class="wave-decoration">
+        <image src="../../images/wave.png" mode="widthFix" class="wave-img"></image>
+      </view>
+    </view>
+  </view>
+
+  <!-- 功能导航 -->
+  <view class="function-grid">
+    <view class="function-item" bindtap="navigateTo" data-url="/pages/ai/ai">
+      <view class="function-icon">🤖</view>
+      <view class="function-name">AI疗愈</view>
+      <view class="function-desc">智能对话，舒缓情绪</view>
+    </view>
+
+    <view class="function-item" bindtap="navigateTo" data-url="/pages/assessment/list/list">
+      <view class="function-icon">📋</view>
+      <view class="function-name">心理评估</view>
+      <view class="function-desc">专业测评，了解自己</view>
+    </view>
+
+    <view class="function-item" bindtap="navigateTo" data-url="/pages/consultation/experts/experts">
+      <view class="function-icon">👨‍⚕️</view>
+      <view class="function-name">专家咨询</view>
+      <view class="function-desc">专业指导，答疑解惑</view>
+    </view>
+
+    <view class="function-item" bindtap="navigateTo" data-url="/pages/bottle/bottle">
+      <view class="function-icon">🍾</view>
+      <view class="function-name">漂流瓶</view>
+      <view class="function-desc">倾诉心声，温暖相遇</view>
+    </view>
+  </view>
+
+  <!-- 快捷入口 -->
+  <view class="quick-section">
+    <view class="section-title">
+      <view class="title-text">快捷入口</view>
+    </view>
+
+    <view class="quick-list">
+      <view class="quick-item" bindtap="navigateTo" data-url="/pages/consultation/list/list">
+        <view class="quick-icon">📅</view>
+        <view class="quick-name">我的咨询</view>
+      </view>
+
+      <view class="quick-item" bindtap="navigateTo" data-url="/pages/assessment/list/list">
+        <view class="quick-icon">📊</view>
+        <view class="quick-name">评估历史</view>
+      </view>
+
+      <view class="quick-item" bindtap="navigateTo" data-url="/pages/health/health">
+        <view class="quick-icon">💡</view>
+        <view class="quick-name">健康建议</view>
+      </view>
+
+      <view class="quick-item" bindtap="navigateTo" data-url="/pages/encyclopedia/encyclopedia">
+        <view class="quick-icon">📖</view>
+        <view class="quick-name">心理百科</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 每日一句 -->
+  <view class="daily-quote card">
+    <view class="quote-icon">💭</view>
+    <view class="quote-content">{{dailyQuote}}</view>
+  </view>
+
+  <!-- 温馨提示 -->
+  <view class="tips-section card">
+    <view class="tips-title">💡 温馨提示</view>
+    <view class="tips-list">
+      <view class="tip-item">• 保持良好的作息习惯，有助于心理健康</view>
+      <view class="tip-item">• 适度运动可以改善情绪状态</view>
+      <view class="tip-item">• 遇到困扰时，及时寻求专业帮助</view>
+    </view>
+  </view>
+</view>
+
