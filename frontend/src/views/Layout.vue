@@ -97,7 +97,7 @@
         <div class="header-right">
           <el-dropdown @command="handleUserCommand">
             <span class="user-info">
-              <el-avatar :size="32" :src="userStore.userInfo?.avatar" />
+              <el-avatar :size="32" :src="safeUserAvatar" />
               <span class="username">{{ userStore.userInfo?.realName || userStore.userInfo?.username }}</span>
               <i class="el-icon-arrow-down"></i>
             </span>
@@ -145,10 +145,32 @@ import { useUserStore } from '@/stores/user'
 const route = useRoute()
 const router = useRouter()
 const userStore = useUserStore()
+const API_BASE = 'http://localhost:8080'
+const INVALID_AVATAR_NAMES = new Set(['non.jpg', 'none.jpg', 'null.jpg', 'undefined.jpg', 'zhon.jpg'])
+
+const createInitialAvatar = (name = '用') => {
+  const text = (name || '用').charAt(0)
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64"><rect width="100%" height="100%" fill="#1d4ed8"/><text x="50%" y="56%" text-anchor="middle" fill="#ffffff" font-size="28" font-family="Microsoft YaHei, Arial" font-weight="700">${text}</text></svg>`
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
+}
+
+const resolveAvatarUrl = (path, name = '用') => {
+  if (!path || typeof path !== 'string') return createInitialAvatar(name)
+  const cleaned = path.trim()
+  const fileName = cleaned.split('/').pop()?.toLowerCase() || ''
+  if (INVALID_AVATAR_NAMES.has(fileName)) return createInitialAvatar(name)
+  if (/^https?:\/\//.test(cleaned) || cleaned.startsWith('data:')) return cleaned
+  if (cleaned.startsWith('/')) return `${API_BASE}${cleaned}`
+  return `${API_BASE}/${cleaned}`
+}
 
 const activeMenu = computed(() => {
   return route.path
 })
+
+const safeUserAvatar = computed(() =>
+  resolveAvatarUrl(userStore.userInfo?.avatar, userStore.userInfo?.realName || userStore.userInfo?.username || '用户')
+)
 
 const handleMenuSelect = (index) => {
   router.push(index)

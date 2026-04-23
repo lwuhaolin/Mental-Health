@@ -73,7 +73,9 @@
           >
             <div class="expert-header">
               <div class="expert-avatar">
-                <el-avatar :size="80" :src="resolveAvatarUrl(expert.avatar) || defaultAvatar" />
+                <el-avatar :size="80" :src="resolveAvatarUrl(expert.avatar)">
+                  <span class="avatar-initial">{{ getAvatarInitial(expert.realName) }}</span>
+                </el-avatar>
               </div>
               <div class="expert-info">
                 <h3 class="expert-name">{{ expert.realName }}</h3>
@@ -131,7 +133,9 @@
       >
         <div v-if="selectedExpert" class="consultation-dialog">
           <div class="expert-info">
-            <el-avatar :size="60" :src="resolveAvatarUrl(selectedExpert.avatar) || defaultAvatar" />
+            <el-avatar :size="60" :src="resolveAvatarUrl(selectedExpert.avatar)">
+              <span class="avatar-initial">{{ getAvatarInitial(selectedExpert.realName) }}</span>
+            </el-avatar>
             <div class="expert-details">
               <h4>{{ selectedExpert.realName }}</h4>
               <p>{{ selectedExpert.title }}</p>
@@ -193,7 +197,9 @@
       >
         <div v-if="selectedExpertDetail" class="expert-detail-dialog">
           <div class="expert-header">
-            <el-avatar :size="100" :src="resolveAvatarUrl(selectedExpertDetail.avatar) || defaultAvatar" />
+            <el-avatar :size="100" :src="resolveAvatarUrl(selectedExpertDetail.avatar)">
+              <span class="avatar-initial">{{ getAvatarInitial(selectedExpertDetail.realName) }}</span>
+            </el-avatar>
             <div class="expert-basic-info">
               <h3>{{ selectedExpertDetail.realName }}</h3>
               <p class="expert-title">{{ selectedExpertDetail.title }}</p>
@@ -275,14 +281,19 @@ import { ElMessage } from 'element-plus'
 import { getPsychologists, bookConsultation, createConsultationAppointment } from '@/api/consultation'
 
 const API_BASE = 'http://localhost:8080'
+const INVALID_AVATAR_NAMES = new Set(['non.jpg', 'none.jpg', 'null.jpg', 'undefined.jpg', 'zhon.jpg'])
+
 const resolveAvatarUrl = (path) => {
-  if (!path) return ''
-  if (/^https?:\/\//.test(path) || path.startsWith('data:')) return path
-  if (path.startsWith('/avatars/') || path.startsWith('avatars/')) return ''
-  if (path.startsWith('/')) return API_BASE + path
-  return `${API_BASE}/${path}`
+  if (!path || typeof path !== 'string') return ''
+  const cleaned = path.trim()
+  const fileName = cleaned.split('/').pop()?.toLowerCase() || ''
+  if (INVALID_AVATAR_NAMES.has(fileName)) return ''
+  if (/^https?:\/\//.test(cleaned) || cleaned.startsWith('data:')) return cleaned
+  if (cleaned.startsWith('/avatars/') || cleaned.startsWith('avatars/')) return ''
+  if (cleaned.startsWith('/')) return API_BASE + cleaned
+  return `${API_BASE}/${cleaned}`
 }
-const defaultAvatar = 'https://api.dicebear.com/7.x/avataaars/svg?seed=expert&backgroundColor=1e90ff'
+const getAvatarInitial = (name) => (name || '专').charAt(0)
 
 const searchKeyword = ref('')
 const selectedSpecialty = ref('')
@@ -319,7 +330,6 @@ const loadExperts = async () => {
         expert.rating = expert.rating || 5.0
         expert.experienceYears = expert.experienceYears || 5
         expert.hourlyRate = expert.hourlyRate || 200
-        if (!expert.avatar) expert.avatar = defaultAvatar
       })
     } else {
       ElMessage.error('加载专家列表失败')
@@ -537,6 +547,11 @@ onMounted(() => {
       font-weight: 500;
     }
   }
+}
+
+.avatar-initial {
+  color: #ffffff;
+  font-weight: 700;
 }
 
 .expert-details {

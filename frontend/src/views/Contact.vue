@@ -173,7 +173,9 @@
                   :span="6"
                 >
                   <div class="team-member">
-                    <el-avatar :size="80" :src="member.avatar" />
+                    <el-avatar :size="80" :src="member.avatar">
+                      <span class="avatar-initial">{{ getAvatarInitial(member.name) }}</span>
+                    </el-avatar>
                     <h4>{{ member.name }}</h4>
                     <p class="position">{{ member.position }}</p>
                     <p class="description">{{ member.description }}</p>
@@ -198,6 +200,8 @@ const contactFormRef = ref()
 const submitting = ref(false)
 const activeFaq = ref(['1'])
 const loadingTeam = ref(false)
+const API_BASE = 'http://localhost:8080'
+const INVALID_AVATAR_NAMES = new Set(['non.jpg', 'none.jpg', 'null.jpg', 'undefined.jpg', 'zhon.jpg'])
 
 const contactForm = ref({
   name: '',
@@ -259,6 +263,24 @@ const faqs = ref([
 
 const teamMembers = ref([])
 
+const createInitialAvatar = (name = '星') => {
+  const text = (name || '星').charAt(0)
+  const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="80" height="80"><rect width="100%" height="100%" fill="#1d4ed8"/><text x="50%" y="55%" text-anchor="middle" fill="#ffffff" font-size="32" font-family="Microsoft YaHei, Arial" font-weight="700">${text}</text></svg>`
+  return `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`
+}
+
+const getAvatarInitial = (name) => (name || '星').charAt(0)
+
+const resolveAvatarUrl = (path, name = '星') => {
+  if (!path || typeof path !== 'string') return createInitialAvatar(name)
+  const cleaned = path.trim()
+  const fileName = cleaned.split('/').pop()?.toLowerCase() || ''
+  if (INVALID_AVATAR_NAMES.has(fileName)) return createInitialAvatar(name)
+  if (/^https?:\/\//.test(cleaned) || cleaned.startsWith('data:')) return cleaned
+  if (cleaned.startsWith('/')) return `${API_BASE}${cleaned}`
+  return `${API_BASE}/${cleaned}`
+}
+
 const loadTeamPsychologists = async () => {
   loadingTeam.value = true
   try {
@@ -269,7 +291,7 @@ const loadTeamPsychologists = async () => {
         name: psychologist.realName,
         position: psychologist.title,
         description: `${psychologist.specialty} | ${psychologist.experienceYears}年经验 | ${psychologist.introduction}`,
-        avatar: psychologist.avatar || `/api/placeholder/80x80?text=${psychologist.realName.charAt(0)}`
+        avatar: resolveAvatarUrl(psychologist.avatar, psychologist.realName)
       }))
     } else {
       ElMessage.error('加载团队专家信息失败')
@@ -282,28 +304,28 @@ const loadTeamPsychologists = async () => {
         name: '张心语',
         position: '首席心理咨询师',
         description: '国家二级心理咨询师，10年咨询经验。',
-        avatar: '/api/placeholder/80x80?text=张'
+        avatar: createInitialAvatar('张')
       },
       {
         id: 2,
         name: '李技术',
         position: '技术总监',
         description: '资深全栈工程师，专注心理健康科技产品。',
-        avatar: '/api/placeholder/80x80?text=李'
+        avatar: createInitialAvatar('李')
       },
       {
         id: 3,
         name: '王运营',
         position: '运营总监',
         description: '互联网产品运营专家，持续提升用户体验。',
-        avatar: '/api/placeholder/80x80?text=王'
+        avatar: createInitialAvatar('王')
       },
       {
         id: 4,
         name: '赵设计',
         position: 'UI/UX设计师',
         description: '注重温暖、易用的人机交互设计。',
-        avatar: '/api/placeholder/80x80?text=赵'
+        avatar: createInitialAvatar('赵')
       }
     ]
   } finally {
@@ -450,6 +472,12 @@ onMounted(() => {
     text-align: center;
     padding: 20px 10px;
 
+    :deep(.el-avatar) {
+      background: #1d4ed8;
+      color: #ffffff;
+      font-weight: 700;
+    }
+
     h4 {
       font-size: 16px;
       font-weight: bold;
@@ -471,6 +499,11 @@ onMounted(() => {
       margin: 0;
     }
   }
+}
+
+.avatar-initial {
+  color: #ffffff;
+  font-weight: 700;
 }
 
 @media (max-width: 768px) {

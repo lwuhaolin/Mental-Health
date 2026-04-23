@@ -37,7 +37,7 @@
           <div class="overview-card">
             <div class="overview-head">
               <div class="overview-icon user">
-                <i class="el-icon-user"></i>
+                <UserOutlined />
               </div>
               <div class="overview-label">用户总数</div>
             </div>
@@ -51,7 +51,7 @@
           <div class="overview-card">
             <div class="overview-head">
               <div class="overview-icon expert">
-                <i class="el-icon-suitcase"></i>
+                <TeamOutlined />
               </div>
               <div class="overview-label">专家总数</div>
             </div>
@@ -65,7 +65,7 @@
           <div class="overview-card">
             <div class="overview-head">
               <div class="overview-icon assessment">
-                <i class="el-icon-document"></i>
+                <BarChartOutlined />
               </div>
               <div class="overview-label">测评统计</div>
             </div>
@@ -79,7 +79,7 @@
           <div class="overview-card">
             <div class="overview-head">
               <div class="overview-icon consultation">
-                <i class="el-icon-chat-dot-round"></i>
+                <MessageOutlined />
               </div>
               <div class="overview-label">咨询总数</div>
             </div>
@@ -546,6 +546,12 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import {
+  UserOutlined,
+  TeamOutlined,
+  BarChartOutlined,
+  MessageOutlined
+} from '@ant-design/icons-vue'
 import { 
   getSystemStats, 
   getUserManagementData, 
@@ -1383,6 +1389,11 @@ onMounted(() => {
   justify-content: center;
   font-size: 18px;
   color: #ffffff;
+
+  :deep(svg) {
+    width: 18px;
+    height: 18px;
+  }
 
   &.user {
     background: #1d4ed8;

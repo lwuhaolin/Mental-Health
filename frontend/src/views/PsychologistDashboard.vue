@@ -91,7 +91,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-icon patient">
-              <i class="el-icon-user"></i>
+              <TeamOutlined />
             </div>
             <div class="stat-text">
               <div class="stat-value">{{ stats.patientCount }}</div>
@@ -102,7 +102,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-icon consultation">
-              <i class="el-icon-chat-dot-round"></i>
+              <MessageOutlined />
             </div>
             <div class="stat-text">
               <div class="stat-value">{{ stats.consultationCount }}</div>
@@ -113,7 +113,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-icon rating">
-              <i class="el-icon-star"></i>
+              <StarOutlined />
             </div>
             <div class="stat-text">
               <div class="stat-value">{{ stats.avgRating }}</div>
@@ -124,7 +124,7 @@
         <div class="stat-card">
           <div class="stat-content">
             <div class="stat-icon income">
-              <i class="el-icon-money"></i>
+              <WalletOutlined />
             </div>
             <div class="stat-text">
               <div class="stat-value">¥{{ stats.totalIncome }}</div>
@@ -709,6 +709,12 @@
 import { ref, onMounted, computed, watch, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage, ElMessageBox } from 'element-plus'
+import {
+  TeamOutlined,
+  MessageOutlined,
+  StarOutlined,
+  WalletOutlined
+} from '@ant-design/icons-vue'
 import { getPsychologists, sendConsultationMessage, getConsultationMessages, getPsychologistPatients, getPsychologistStats, getConsultationDetail, updateConsultationStatus, getPsychologistDetail, uploadPsychologistAvatar } from '@/api/consultation'
 import { getPsychologistAppointments, acceptAppointment, cancelAppointment, getPsychologistIncomeTrend, getPsychologistConsultationTypes, getPsychologistDurationStats, getPsychologistRatingDistribution, getPsychologistDetailedStats } from '@/api/consultation'
 import * as echarts from 'echarts'
@@ -751,10 +757,10 @@ const doAvatarUpload = async (options) => {
       psychologistInfo.value.avatar = res.url
       // ?????????
     } else {
-      ElMessage.error(res.message || '??????')
+      ElMessage.error(res.message || '头像上传失败')
     }
   } catch (e) {
-    ElMessage.error('??????')
+    ElMessage.error('头像上传失败')
   } finally {
     avatarUploading.value = false
   }
@@ -812,7 +818,7 @@ const loadPsychologistStats = async () => {
         stats.value.totalIncome = response.stats.totalIncome || 0
         console.log('???????????????:', response.stats)
       } else {
-        ElMessage.warning('???????????????????????')
+        ElMessage.warning('暂时无法获取统计数据，已使用默认值')
         // ??????????
         stats.value.patientCount = 0
         stats.value.consultationCount = 0
@@ -822,7 +828,7 @@ const loadPsychologistStats = async () => {
     }
   } catch (error) {
     console.error('?????????????????:', error)
-    ElMessage.error('?????????????')
+    ElMessage.error('加载统计数据失败')
     // ??????????
     stats.value.patientCount = 0
     stats.value.consultationCount = 0
@@ -861,7 +867,7 @@ const loadPatientList = async () => {
     }
   } catch (error) {
     console.error('????????????:', error)
-    ElMessage.error('????????????')
+    ElMessage.error('加载患者列表失败')
   }
 }
 
@@ -892,7 +898,7 @@ const loadChatMessages = async (consultationId) => {
 // ???????????????
 const sendMessage = async () => {
   if (!newMessage.value.trim()) {
-    ElMessage.warning('?????????????')
+    ElMessage.warning('请输入消息内容')
     return
   }
 
@@ -922,7 +928,7 @@ const sendMessage = async () => {
       const patientReply = {
         id: Date.now() + 1,
         consultationId: currentConsultation.value.id,
-        messageContent: 'ݧ????????????????????',
+          messageContent: '好的，我想先聊聊最近的压力和睡眠问题。',
         senderType: 'user',
         createTime: new Date().toISOString()
       }
@@ -931,7 +937,7 @@ const sendMessage = async () => {
     
   } catch (error) {
     console.error('??????????:', error)
-    ElMessage.error('??????????')
+    ElMessage.error('发送消息失败')
   } finally {
     sending.value = false
   }
@@ -949,7 +955,7 @@ const handleCloseChat = () => {
 const completeConsultation = async () => {
   try {
     if (!currentConsultation.value) {
-      ElMessage.error('????????????')
+      ElMessage.error('当前咨询不存在')
       return
     }
     
@@ -965,7 +971,7 @@ const completeConsultation = async () => {
     
   } catch (error) {
     console.error('?????????:', error)
-    ElMessage.error('?????????')
+    ElMessage.error('完成咨询失败')
   } finally {
     completing.value = false
   }
@@ -1061,7 +1067,7 @@ const loadActiveConsultations = async () => {
         activeConsultations.value = response.patients.map(patient => ({
           id: patient.consultationId,
           patientName: patient.name,
-          title: patient.problem || '??????',
+          title: patient.problem || '心理咨询',
           status: patient.status,
           createTime: patient.createTime || patient.lastConsultation,
           userFeedback: patient.userFeedback,
@@ -1088,7 +1094,7 @@ const viewConsultationFeedback = async (consultation) => {
       currentConsultationDetail.value = detailResponse.consultation
       showDetailDialog.value = true
     } else {
-      ElMessage.error('?????????????')
+      ElMessage.error('获取咨询详情失败')
     }
   } catch (error) {
     console.error('????????????:', error)
@@ -1100,11 +1106,11 @@ const viewConsultationFeedback = async (consultation) => {
 const completeConsultationDirect = async (consultation) => {
   try {
     await ElMessageBox.confirm(
-      `?????????${consultation.patientName}?????????????????????????????????`,
-      '?????????',
+      `确认将 ${consultation.patientName} 的咨询标记为已完成吗？此操作会更新统计数据。`,
+      '确认完成咨询',
       {
-        confirmButtonText: '??????',
-        cancelButtonText: '???',
+        confirmButtonText: '确认完成',
+        cancelButtonText: '取消',
         type: 'warning',
       }
     )
@@ -1119,7 +1125,7 @@ const completeConsultationDirect = async (consultation) => {
       consultationId: consultation.id,
       duration: durationMinutes,
       rating: 5, // ???????
-      feedback: '????????' // ??????
+      feedback: '咨询已结束，自动记录' // 默认反馈
     })
     
     if (response.success) {
@@ -1135,7 +1141,7 @@ const completeConsultationDirect = async (consultation) => {
         initCharts()
       }
     } else {
-      ElMessage.error('?????????: ' + response.message)
+      ElMessage.error('完成咨询失败: ' + response.message)
     }
   } catch (error) {
     if (error === 'cancel') {
@@ -1143,14 +1149,14 @@ const completeConsultationDirect = async (consultation) => {
       return
     }
     console.error('?????????:', error)
-    ElMessage.error('?????????: ' + error.message)
+    ElMessage.error('完成咨询失败: ' + error.message)
   }
 }
 
 // ????????
 const refreshConsultations = () => {
   loadActiveConsultations()
-  ElMessage.info('??????????')
+  ElMessage.success('咨询列表已刷新')
 }
 
 // ??????????
@@ -1161,7 +1167,7 @@ const viewPatientDetail = async (patient) => {
     console.log('???????????????:', patient, '???ID:', consultationId)
     
     if (!consultationId) {
-      ElMessage.error('?????????ID???????????')
+      ElMessage.error('无法获取咨询ID，无法查看详情')
       return
     }
     
@@ -1173,11 +1179,11 @@ const viewPatientDetail = async (patient) => {
                   '???ID:', detailResponse.consultation.userId,
                   '????:', detailResponse.consultation.title)
     } else {
-      ElMessage.error('?????????????: ' + detailResponse.message)
+      ElMessage.error('获取咨询详情失败: ' + detailResponse.message)
     }
   } catch (error) {
     console.error('????????????:', error)
-    ElMessage.error('?????????: ' + error.message)
+    ElMessage.error('查看详情失败: ' + error.message)
   }
 }
 
@@ -1237,10 +1243,10 @@ const handleCloseDetail = () => {
 // ????????????
 const getStatusTagType = (status) => {
   switch (status) {
-    case '?????': return 'warning'
-    case '??????': return 'success'
-    case '?????': return 'info'
-    case '???': return 'danger'
+    case '待确认': return 'warning'
+    case '进行中': return 'success'
+    case '已完成': return 'info'
+    case '已取消': return 'danger'
     default: return 'info'
   }
 }
@@ -1433,20 +1439,20 @@ const loadCurrentPsychologistInfo = async () => {
         
         // ??????????????????????????????????????
         psychologistInfo.value = {
-          name: response.psychologist.realName || response.psychologist.username || '??????',
-          title: response.psychologist.title || '???????????????',
-          qualifications: ['???????', '???????????????'], // ????????
+          name: response.psychologist.realName || response.psychologist.username || '心理专家',
+          title: response.psychologist.title || '国家二级心理咨询师',
+          qualifications: ['执业证书', '心理咨询师资格认证'], // 默认资质标签
           avatar: response.psychologist.avatar || '',
-          experience: response.psychologist.experienceYears ? response.psychologist.experienceYears + '????????' : '8????????',
-          specialization: response.psychologist.specialty || '?????????????????????',
-          education: '???????', // ????????????
-          certification: '???????????????', // ???????
-          introduction: response.psychologist.introduction || '????????????????????????????????????????????',
+          experience: response.psychologist.experienceYears ? response.psychologist.experienceYears + '年临床经验' : '8年临床经验',
+          specialization: response.psychologist.specialty || '焦虑疏导、亲密关系、职场压力',
+          education: '心理学硕士', // 默认学历展示
+          certification: '国家认证心理咨询师', // 默认认证信息
+          introduction: response.psychologist.introduction || '擅长为来访者提供情绪支持与结构化干预，帮助建立更稳定的心理状态。',
           hourlyRate: response.psychologist.hourlyRate || 300,
           totalPatients: 0, // ????????
           successRate: 0, // ????????
-          languages: ['????', '???'], // ????????
-          availableTime: '????????? 9:00-18:00' // ???????????
+          languages: ['中文', '英文'], // 默认服务语言
+          availableTime: '工作日 9:00-18:00' // 默认可预约时间
         }
         
         console.log('???????????????:', psychologistInfo.value) // ?????????????????
@@ -2353,6 +2359,11 @@ onMounted(async () => {
       justify-content: center;
       font-size: 18px;
       color: white;
+
+      :deep(svg) {
+        width: 18px;
+        height: 18px;
+      }
       
       &.patient {
         background: #4f46e5;

@@ -41,7 +41,7 @@
             <div class="function-card tech-card" @click="startChat('therapy')">
               <div class="card-glow"></div>
               <div class="function-icon therapy">
-                <i class="el-icon-magic-stick"></i>
+                <RobotOutlined />
               </div>
               <h3>AI疗愈师</h3>
               <p>情绪疏导、压力缓解、心理疗愈</p>
@@ -51,7 +51,7 @@
                 <span class="tech-tag">正念引导</span>
               </div>
               <el-button type="primary" size="small" class="tech-button">
-                <i class="el-icon-chat-dot-round"></i> 开始对话
+                <MessageOutlined /> 开始对话
               </el-button>
             </div>
           </el-col>
@@ -60,7 +60,7 @@
             <div class="function-card tech-card" @click="startChat('assessment')">
               <div class="card-glow"></div>
               <div class="function-icon assessment">
-                <i class="el-icon-document-checked"></i>
+                <FileSearchOutlined />
               </div>
               <h3>AI心理评估</h3>
               <p>智能评估、专业分析、个性化建议</p>
@@ -70,7 +70,7 @@
                 <span class="tech-tag">专业建议</span>
               </div>
               <el-button type="primary" size="small" class="tech-button">
-                <i class="el-icon-data-analysis"></i> 开始评估
+                <BarChartOutlined /> 开始评估
               </el-button>
             </div>
           </el-col>
@@ -263,6 +263,12 @@ import { ref, onMounted, nextTick } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { format } from 'date-fns'
+import {
+  RobotOutlined,
+  MessageOutlined,
+  FileSearchOutlined,
+  BarChartOutlined
+} from '@ant-design/icons-vue'
 
 const router = useRouter()
 
@@ -840,6 +846,11 @@ onMounted(() => {
   box-shadow: none;
   transition: all 0.4s ease;
 
+  :deep(svg) {
+    width: 24px;
+    height: 24px;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -909,6 +920,12 @@ onMounted(() => {
     background: rgba(102, 126, 234, 0.2);
     transform: translateY(-1px);
   }
+}
+
+.tech-button :deep(svg) {
+  width: 14px;
+  height: 14px;
+  margin-right: 4px;
 }
 
 .tech-chat {

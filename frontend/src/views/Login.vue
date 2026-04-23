@@ -1,9 +1,23 @@
 ﻿<template>
   <div class="login-container">
     <div class="login-background">
+      <div class="aurora aurora-1"></div>
+      <div class="aurora aurora-2"></div>
+      <div class="aurora aurora-3"></div>
+      <div class="grid-overlay"></div>
+      <div class="glow glow-left"></div>
+      <div class="glow glow-right"></div>
       <div class="wave wave1"></div>
       <div class="wave wave2"></div>
       <div class="wave wave3"></div>
+      <div class="floating-particles">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
     </div>
 
     <div class="login-content">
@@ -458,7 +472,10 @@ const handlePsychologistRegister = async () => {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #0f172a;
+  background:
+    radial-gradient(circle at 20% 15%, #1e3a8a 0%, transparent 38%),
+    radial-gradient(circle at 80% 82%, #0f766e 0%, transparent 30%),
+    linear-gradient(120deg, #020617 0%, #0b1b46 48%, #0a1634 100%);
   position: relative;
   overflow: hidden;
 
@@ -489,7 +506,81 @@ const handlePsychologistRegister = async () => {
 }
 
 .login-background {
-  display: none;
+  position: absolute;
+  inset: -12%;
+  z-index: 0;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(70px);
+  opacity: 0.35;
+  mix-blend-mode: screen;
+}
+
+.aurora-1 {
+  width: 600px;
+  height: 600px;
+  top: -120px;
+  left: -140px;
+  background: radial-gradient(circle, rgba(59, 130, 246, 0.85) 0%, rgba(30, 64, 175, 0.16) 65%, transparent 100%);
+  animation: driftSlow 18s ease-in-out infinite alternate;
+}
+
+.aurora-2 {
+  width: 520px;
+  height: 520px;
+  bottom: -140px;
+  right: -100px;
+  background: radial-gradient(circle, rgba(16, 185, 129, 0.75) 0%, rgba(15, 118, 110, 0.14) 65%, transparent 100%);
+  animation: driftSlow 23s ease-in-out infinite alternate-reverse;
+}
+
+.aurora-3 {
+  width: 420px;
+  height: 420px;
+  top: 28%;
+  left: 48%;
+  background: radial-gradient(circle, rgba(129, 140, 248, 0.55) 0%, rgba(37, 99, 235, 0.1) 70%, transparent 100%);
+  animation: floatSoft 16s ease-in-out infinite;
+}
+
+.grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(148, 163, 184, 0.08) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(148, 163, 184, 0.08) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(circle at center, black 36%, transparent 92%);
+  animation: gridMove 24s linear infinite;
+}
+
+.glow {
+  position: absolute;
+  width: 46vw;
+  max-width: 620px;
+  height: 46vw;
+  max-height: 620px;
+  border-radius: 50%;
+  filter: blur(50px);
+  opacity: 0.24;
+  background: radial-gradient(circle, rgba(37, 99, 235, 0.9) 0%, rgba(15, 23, 42, 0) 70%);
+}
+
+.glow-left {
+  left: -14%;
+  top: 10%;
+  animation: pulseGlow 8s ease-in-out infinite;
+}
+
+.glow-right {
+  right: -12%;
+  bottom: -8%;
+  animation: pulseGlow 10s ease-in-out infinite reverse;
 }
 
 @keyframes wave {
@@ -498,6 +589,111 @@ const handlePsychologistRegister = async () => {
   }
   100% {
     transform: translateX(-50%) rotate(360deg);
+  }
+}
+
+.wave {
+  position: absolute;
+  width: 160%;
+  height: 300px;
+  left: -30%;
+  border-radius: 42%;
+  opacity: 0.2;
+  filter: blur(1px);
+}
+
+.wave1 {
+  bottom: -180px;
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.33), rgba(30, 64, 175, 0.12));
+  animation: wave 24s linear infinite;
+}
+
+.wave2 {
+  bottom: -200px;
+  background: linear-gradient(90deg, rgba(16, 185, 129, 0.22), rgba(59, 130, 246, 0.14));
+  animation: wave 32s linear infinite reverse;
+}
+
+.wave3 {
+  bottom: -220px;
+  background: linear-gradient(90deg, rgba(129, 140, 248, 0.26), rgba(15, 23, 42, 0.1));
+  animation: wave 40s linear infinite;
+}
+
+.floating-particles {
+  position: absolute;
+  inset: 0;
+}
+
+.floating-particles span {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: rgba(226, 232, 240, 0.6);
+  box-shadow: 0 0 16px rgba(148, 163, 184, 0.85);
+  animation: particleFloat 12s linear infinite;
+}
+
+.floating-particles span:nth-child(1) { left: 12%; bottom: -10%; animation-delay: 0s; animation-duration: 11s; }
+.floating-particles span:nth-child(2) { left: 28%; bottom: -6%; animation-delay: 2s; animation-duration: 14s; }
+.floating-particles span:nth-child(3) { left: 46%; bottom: -12%; animation-delay: 1s; animation-duration: 13s; }
+.floating-particles span:nth-child(4) { left: 62%; bottom: -7%; animation-delay: 3s; animation-duration: 15s; }
+.floating-particles span:nth-child(5) { left: 78%; bottom: -14%; animation-delay: 4s; animation-duration: 12s; }
+.floating-particles span:nth-child(6) { left: 90%; bottom: -9%; animation-delay: 5s; animation-duration: 16s; }
+
+@keyframes driftSlow {
+  0% {
+    transform: translate3d(0, 0, 0) scale(1);
+  }
+  100% {
+    transform: translate3d(40px, -26px, 0) scale(1.08);
+  }
+}
+
+@keyframes floatSoft {
+  0%, 100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(20px, -16px, 0);
+  }
+}
+
+@keyframes gridMove {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(60px);
+  }
+}
+
+@keyframes pulseGlow {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.2;
+  }
+  50% {
+    transform: scale(1.08);
+    opacity: 0.3;
+  }
+}
+
+@keyframes particleFloat {
+  0% {
+    transform: translate3d(0, 0, 0) scale(0.8);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.8;
+  }
+  85% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translate3d(-24px, -115vh, 0) scale(1.2);
+    opacity: 0;
   }
 }
 
@@ -522,11 +718,16 @@ const handlePsychologistRegister = async () => {
 }
 
 .login-card {
-  background: #ffffff;
-  border-radius: 18px;
+  background: linear-gradient(165deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 250, 252, 0.92) 100%);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-radius: 22px;
   padding: 34px 30px;
-  box-shadow: 0 24px 48px rgba(2, 6, 23, 0.34);
-  border: 1px solid #dbe2ea;
+  box-shadow:
+    0 24px 56px rgba(2, 6, 23, 0.34),
+    0 10px 24px rgba(15, 23, 42, 0.18),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(203, 213, 225, 0.8);
   position: relative;
   overflow: hidden;
 
@@ -536,8 +737,17 @@ const handlePsychologistRegister = async () => {
     top: 0;
     left: 0;
     width: 100%;
-    height: 4px;
-    background: #0f172a;
+    height: 5px;
+    background: linear-gradient(90deg, #0f172a 0%, #1d4ed8 52%, #0f172a 100%);
+    pointer-events: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    inset: 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.4);
     pointer-events: none;
   }
 }
@@ -549,11 +759,12 @@ const handlePsychologistRegister = async () => {
 }
 
 .login-title {
-  color: #0f172a;
+  color: #0b1736;
   font-size: 34px;
-  font-weight: 800;
+  font-weight: 900;
   margin: 0 0 8px 0;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.4px;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
 
   .el-icon-ship {
     margin-right: 10px;
@@ -563,10 +774,10 @@ const handlePsychologistRegister = async () => {
 }
 
 .login-subtitle {
-  color: #64748b;
+  color: #5b6d86;
   font-size: 13px;
   margin: 0;
-  font-weight: 600;
+  font-weight: 700;
   letter-spacing: 0.2px;
 }
 
@@ -583,13 +794,14 @@ const handlePsychologistRegister = async () => {
     gap: 10px;
 
     .el-radio-button__inner {
-      border-radius: 10px;
+      border-radius: 12px;
       padding: 9px 14px;
       font-size: 12px;
       font-weight: 700;
       transition: all 0.2s ease;
-      border: 1px solid #d8e0ea;
-      background: #fff;
+      border: 1px solid #d3ddec;
+      background: rgba(255, 255, 255, 0.72);
+      color: #1e293b;
     }
 
     .el-radio-button:first-child .el-radio-button__inner {
@@ -597,7 +809,7 @@ const handlePsychologistRegister = async () => {
     }
 
     .el-radio-button__original-radio:checked + .el-radio-button__inner {
-      background: #0f172a;
+      background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
       border-color: #0f172a;
       box-shadow: none;
       transform: none;
@@ -606,20 +818,24 @@ const handlePsychologistRegister = async () => {
 
   .el-input {
     :deep(.el-input__wrapper) {
-      border-radius: 10px;
+      border-radius: 12px;
       box-shadow: none;
-      min-height: 42px;
+      min-height: 46px;
       transition: all 0.2s ease;
-      border: 1px solid #d8e0ea;
+      border: 1px solid #d3ddec;
+      background: rgba(255, 255, 255, 0.8);
 
       &:hover {
-        border-color: #bfd0e6;
+        border-color: #b7c9e6;
+        box-shadow: 0 6px 14px rgba(148, 163, 184, 0.18);
       }
 
       &.is-focus {
-        box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+        box-shadow:
+          0 0 0 4px rgba(37, 99, 235, 0.14),
+          0 8px 18px rgba(30, 64, 175, 0.12);
         border-color: #1d4ed8;
-        transform: none;
+        transform: translateY(-1px);
       }
     }
 
@@ -632,24 +848,25 @@ const handlePsychologistRegister = async () => {
 
 .login-btn {
   width: 100%;
-  border-radius: 10px;
-  height: 42px;
+  border-radius: 12px;
+  height: 46px;
   font-size: 14px;
-  font-weight: 700;
-  background: #0f172a;
+  font-weight: 800;
+  background: linear-gradient(135deg, #0f172a 0%, #1e3a8a 100%);
   border: 1px solid #0f172a;
-  box-shadow: none;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.3);
   transition: all 0.2s ease;
-  letter-spacing: 0.2px;
+  letter-spacing: 0.6px;
 
   &:hover {
     transform: translateY(-1px);
-    background: #1e293b;
-    border-color: #1e293b;
+    background: linear-gradient(135deg, #111c3e 0%, #1d4ed8 100%);
+    border-color: #1e3a8a;
+    box-shadow: 0 14px 24px rgba(15, 23, 42, 0.35);
   }
 
   &:active {
-    transform: translateY(-1px);
+    transform: translateY(0);
   }
 }
 
@@ -658,7 +875,7 @@ const handlePsychologistRegister = async () => {
   justify-content: space-between;
   margin-top: 18px;
   padding-top: 14px;
-  border-top: 1px solid #e2e8f0;
+  border-top: 1px solid #dbe4ef;
 
   .el-link {
     font-size: 12px;
@@ -666,12 +883,21 @@ const handlePsychologistRegister = async () => {
     transition: all 0.2s ease;
 
     &:hover {
-      transform: none;
+      transform: translateY(-1px);
     }
   }
 }
 
 @media (max-width: 768px) {
+  .grid-overlay {
+    background-size: 44px 44px;
+  }
+
+  .floating-particles span {
+    width: 4px;
+    height: 4px;
+  }
+
   .login-content {
     max-width: 100%;
     padding: 15px;

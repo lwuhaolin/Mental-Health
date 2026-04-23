@@ -109,7 +109,7 @@
               <div class="actions-list">
                 <div class="action-item" @click="$router.push('/assessment')">
                   <div class="action-icon" style="background: #409EFF;">
-                    <i class="el-icon-document"></i>
+                    <FileTextOutlined />
                   </div>
                   <div class="action-info">
                     <h4>开始测评</h4>
@@ -119,7 +119,7 @@
 
                 <div class="action-item" @click="$router.push('/ai-interaction')">
                   <div class="action-icon" style="background: #67C23A;">
-                    <i class="el-icon-chat-dot-round"></i>
+                    <RobotOutlined />
                   </div>
                   <div class="action-info">
                     <h4>AI互动</h4>
@@ -129,7 +129,7 @@
 
                 <div class="action-item" @click="$router.push('/message-bottle')">
                   <div class="action-icon" style="background: #E6A23C;">
-                    <i class="el-icon-postcard"></i>
+                    <NotificationOutlined />
                   </div>
                   <div class="action-info">
                     <h4>漂流瓶</h4>
@@ -139,7 +139,7 @@
 
                 <div class="action-item" @click="consultExpert">
                   <div class="action-icon" style="background: #F56C6C;">
-                    <i class="el-icon-service"></i>
+                    <TeamOutlined />
                   </div>
                   <div class="action-info">
                     <h4>专家咨询</h4>
@@ -194,6 +194,12 @@ import { ref, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { ElMessage } from 'element-plus'
 import { updateUser } from '@/api/user'
+import {
+  FileTextOutlined,
+  RobotOutlined,
+  NotificationOutlined,
+  TeamOutlined
+} from '@ant-design/icons-vue'
 
 const router = useRouter()
 const showEditDialog = ref(false)
@@ -475,8 +481,9 @@ onMounted(() => {
       justify-content: center;
       margin-right: 12px;
 
-      i {
-        font-size: 20px;
+      :deep(svg) {
+        width: 20px;
+        height: 20px;
         color: white;
       }
     }
